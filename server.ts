@@ -313,38 +313,84 @@ async function saveClaimedPasswordHash(passwordHash: string): Promise<boolean> {
 }
 
 async function initStorage(): Promise<void> {
-  const dbUrl = process.env.DATABASE_URL?.trim();
-  if (dbUrl) {
-    try {
-      const useSSL = !dbUrl.includes('railway.internal') && !dbUrl.includes('localhost');
-      pool = new Pool({
-        connectionString: dbUrl,
-        ssl: useSSL ? { rejectUnauthorized: false } : false,
-      });
+  const dbUrl =
+    process.env.DATABASE_URL?.trim() ||
+    process.env.DATABASE_PRIVATE_URL?.trim() ||
+    process.env.POSTGRES_URL?.trim() ||
+    process.env.DATABASE_PUBLIC_URL?.trim();
 
-      await pool.query('CREATE TABLE IF NOT EXISTS site_settings (id INT PRIMARY KEY, data JSONB NOT NULL);');
-      await pool.query(
-        "CREATE TABLE IF NOT EXISTS inquiries (id SERIAL PRIMARY KEY, name TEXT NOT NULL, phone TEXT NOT NULL, email TEXT, service TEXT NOT NULL, message TEXT, status TEXT DEFAULT 'Pending', created_at TIMESTAMPTZ DEFAULT NOW());"
-      );
-      await pool.query(
-        'CREATE TABLE IF NOT EXISTS admin_auth (id INT PRIMARY KEY, password_hash TEXT NOT NULL, updated_at TIMESTAMPTZ DEFAULT NOW());'
-      );
+  const hasPgParts = Boolean(process.env.PGHOST?.trim() && process.env.PGUSER?.trim() && process.env.PGDATABASE?.trim());
 
-      const res = await pool.query('SELECT data FROM site_settings WHERE id = 1');
-      if (res.rows.length === 0) {
-        await pool.query('INSERT INTO site_settings (id, data) VALUES (1, $1)', [
-          JSON.stringify(defaultSiteData),
-        ]);
+  if (dbUrl || hasPgParts) {
+    const hostHint = dbUrl || process.env.PGHOST || '';
+    const useSSL =
+      !hostHint.includes('railway.internal') &&
+      !hostHint.includes('localhost') &&
+      !hostHint.includes('127.0.0.1');
+
+    const poolConfig = dbUrl
+      ? {
+          connectionString: dbUrl,
+          ssl: useSSL ? { rejectUnauthorized: false } : false,
+          connectionTimeoutMillis: 10000,
+        }
+      : {
+          host: process.env.PGHOST?.trim(),
+          port: Number(process.env.PGPORT) || 5432,
+          user: process.env.PGUSER?.trim(),
+          password: process.env.PGPASSWORD,
+          database: process.env.PGDATABASE?.trim(),
+          ssl: useSSL ? { rejectUnauthorized: false } : false,
+          connectionTimeoutMillis: 10000,
+        };
+
+    const maxAttempts = 3;
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      let candidatePool: Pool | null = null;
+      try {
+        candidatePool = new Pool(poolConfig);
+        candidatePool.on('error', (err) => {
+          console.error('Unexpected PostgreSQL pool error:', err.message);
+        });
+
+        await candidatePool.query(
+          'CREATE TABLE IF NOT EXISTS site_settings (id INT PRIMARY KEY, data JSONB NOT NULL);'
+        );
+        await candidatePool.query(
+          "CREATE TABLE IF NOT EXISTS inquiries (id SERIAL PRIMARY KEY, name TEXT NOT NULL, phone TEXT NOT NULL, email TEXT, service TEXT NOT NULL, message TEXT, status TEXT DEFAULT 'Pending', created_at TIMESTAMPTZ DEFAULT NOW());"
+        );
+        await candidatePool.query(
+          'CREATE TABLE IF NOT EXISTS admin_auth (id INT PRIMARY KEY, password_hash TEXT NOT NULL, updated_at TIMESTAMPTZ DEFAULT NOW());'
+        );
+
+        const res = await candidatePool.query('SELECT data FROM site_settings WHERE id = 1');
+        if (res.rows.length === 0) {
+          await candidatePool.query('INSERT INTO site_settings (id, data) VALUES (1, $1)', [
+            JSON.stringify(defaultSiteData),
+          ]);
+        }
+
+        pool = candidatePool;
+        useDB = true;
+        console.log('Connected to PostgreSQL database');
+        return;
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Unknown DB error';
+        console.error(
+          `Database connection attempt ${attempt}/${maxAttempts} failed:`,
+          message
+        );
+        if (candidatePool) {
+          await candidatePool.end().catch(() => {});
+        }
+        pool = null;
+        useDB = false;
+        if (attempt < maxAttempts) {
+          await new Promise((resolve) => setTimeout(resolve, 1500));
+        }
       }
-      useDB = true;
-      console.log('Connected to PostgreSQL database');
-      return;
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unknown DB error';
-      console.error('Database unavailable, falling back to local JSON storage:', message);
-      pool = null;
-      useDB = false;
     }
+    console.error('PostgreSQL unavailable after retries, falling back to local JSON storage.');
   }
 
   if (!fs.existsSync(DATA_FILE)) {
