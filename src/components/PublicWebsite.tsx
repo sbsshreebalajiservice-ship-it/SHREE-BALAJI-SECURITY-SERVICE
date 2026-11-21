@@ -405,6 +405,98 @@ export function PublicWebsite({ siteData }: PublicWebsiteProps) {
           </div>
         </section>
 
+        {/* Active On-Ground Deployment Showcase — Jabalpur, Madhya Pradesh */}
+        <section id="jabalpur-deployments" className="py-14 sm:py-16 lg:py-24 bg-white border-t border-slate-200">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 sm:mb-12">
+              <div className="max-w-2xl">
+                <p className="text-sm font-medium text-amber-700 mb-2">
+                  On-Ground Operations · Jabalpur, Madhya Pradesh
+                </p>
+                <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-3">
+                  Active Security Services in Jabalpur
+                </h2>
+                <p className="text-base text-slate-600 leading-relaxed">
+                  Providing disciplined, uniformed guarding, hospitality entrance security, and visitor screening across commercial venues in Jabalpur — including active 24/7 site deployment at{' '}
+                  <span className="font-semibold text-slate-900">House of Blends, Jabalpur</span>.
+                </p>
+              </div>
+              <div className="shrink-0">
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('contact')}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-md transition-colors duration-150 whitespace-nowrap cursor-pointer"
+                >
+                  <span>Request Jabalpur Deployment</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+              {[
+                {
+                  src: '/src/assets/images/jabalpur_1.jpg',
+                  alt: 'Shree Balaji Security officer welcoming guests at House of Blends Jabalpur',
+                  tag: 'House of Blends · Jabalpur',
+                  title: 'Front Entrance Hospitality Guarding',
+                  desc: 'Courteous guest reception, doorway access control, and visible deterrence at Jabalpur retail and cafe venues.',
+                },
+                {
+                  src: '/src/assets/images/jabalpur_2.jpg',
+                  alt: 'Shree Balaji Security guard checking digital duty log inside Jabalpur cafe',
+                  tag: 'Digital Check-In · Jabalpur',
+                  title: 'Duty Roster & Visitor Verification',
+                  desc: 'Real-time shift logging, supervision reporting, and digital entry verification by trained site guards.',
+                },
+                {
+                  src: '/src/assets/images/jabalpur_3.jpg',
+                  alt: 'Shree Balaji Security guard screening visitors at entrance in Jabalpur',
+                  tag: 'Access Screening · Jabalpur',
+                  title: 'Visitor & Bag Screening',
+                  desc: 'Alert entry-point screening ensuring safety for families, patrons, and staff throughout operating hours.',
+                },
+                {
+                  src: '/src/assets/images/jabalpur_4.jpg',
+                  alt: 'Uniformed Shree Balaji Security guard stationed outside House of Blends Jabalpur',
+                  tag: 'Active Post · Jabalpur, MP',
+                  title: 'Dedicated Site Protection',
+                  desc: 'PSARA-compliant, background-verified officers stationed on-site across Jabalpur businesses and establishments.',
+                },
+              ].map((item, idx) => (
+                <article
+                  key={item.src}
+                  className="bg-slate-50 border border-slate-200 rounded-lg overflow-hidden flex flex-col transition-colors duration-150 hover:border-slate-300"
+                >
+                  <div className="aspect-[4/5] w-full overflow-hidden bg-slate-900 relative">
+                    <ResilientImage
+                      src={item.src}
+                      alt={item.alt}
+                      fallbackTitle={item.title}
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                  <div className="p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center gap-2 text-xs text-amber-700 font-medium mb-1.5">
+                        <span className="font-mono tabular-nums">
+                          {String(idx + 1).padStart(2, '0')}
+                        </span>
+                        <span aria-hidden="true">·</span>
+                        <span>{item.tag}</span>
+                      </div>
+                      <h3 className="font-display text-lg font-bold text-slate-900 tracking-tight mb-1.5">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Proof & Operations / About Us Section */}
         <section id="about" className="py-14 sm:py-16 lg:py-24 bg-slate-100 border-y border-slate-200">
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-start">
