@@ -77,7 +77,7 @@ const defaultSiteData: SiteData = {
   phone: '+91 7566514338 / 8319802819',
   email: 'sbs.shreebalajiservice@gmail.com',
   address: 'Madhya Pradesh, India',
-  stat1Num: '10+',
+  stat1Num: '5+',
   stat1Label: 'Years of Experience',
   stat2Num: '500+',
   stat2Label: 'Trained Security Guards',
