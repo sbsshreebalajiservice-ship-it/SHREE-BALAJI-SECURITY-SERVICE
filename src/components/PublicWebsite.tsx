@@ -18,7 +18,6 @@ interface PublicWebsiteProps {
   onNavigate: (path: string) => void;
 }
 
-const HERO_IMAGE = '/src/assets/images/hero_security_command_1795262486785.jpg';
 const LOGO_IMAGE = '/src/assets/images/shree_balaji_logo.png';
 
 export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
@@ -289,18 +288,20 @@ export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
                 </div>
               </div>
 
-              <div className="lg:col-span-6 relative min-h-[280px] sm:min-h-[360px] lg:min-h-[440px] rounded-lg overflow-hidden border border-slate-800 bg-slate-900">
-                <ResilientImage
-                  src={HERO_IMAGE}
-                  alt={`${siteData.companyName} security officer on duty at commercial headquarters`}
-                  fallbackTitle={siteData.companyName}
-                  className="w-full h-full lg:h-full object-cover"
-                />
+              <div className="lg:col-span-6 relative min-h-[320px] sm:min-h-[380px] lg:min-h-[440px] rounded-lg overflow-hidden border border-slate-800 bg-[#0d0e10] flex flex-col justify-between">
+                <div className="flex-1 flex items-center justify-center p-6 sm:p-8 pb-14">
+                  <ResilientImage
+                    src={LOGO_IMAGE}
+                    alt={`${siteData.companyName} official crest`}
+                    fallbackTitle={siteData.companyName}
+                    className="max-h-[300px] sm:max-h-[340px] w-auto object-contain"
+                  />
+                </div>
                 <div
                   aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent"
                 />
-                <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 flex items-center justify-between gap-4 text-xs sm:text-sm text-slate-200">
+                <div className="relative z-10 px-5 sm:px-6 pb-5 pt-2 flex items-center justify-between gap-4 text-xs sm:text-sm text-slate-200 border-t border-slate-800/80 bg-slate-950/75">
                   <span className="font-medium">Command & Guarding Operations</span>
                   <span className="font-mono text-amber-300 tabular-nums">Active 24/7</span>
                 </div>
