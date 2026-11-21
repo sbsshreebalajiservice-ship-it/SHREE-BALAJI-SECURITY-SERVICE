@@ -15,12 +15,11 @@ import { ResilientImage } from './ResilientImage';
 
 interface PublicWebsiteProps {
   siteData: SiteData;
-  onNavigate: (path: string) => void;
 }
 
 const LOGO_IMAGE = '/src/assets/images/shree_balaji_logo.png';
 
-export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
+export function PublicWebsite({ siteData }: PublicWebsiteProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -636,17 +635,8 @@ export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-6 text-sm shrink-0">
-            <a
-              href="/admin"
-              onClick={(e) => {
-                e.preventDefault();
-                onNavigate('/admin');
-              }}
-              className="text-amber-400 hover:text-amber-300 font-medium transition-colors whitespace-nowrap shrink-0"
-            >
-              Admin Panel
-            </a>
+          <div className="text-xs text-slate-400 shrink-0 whitespace-nowrap">
+            © {new Date().getFullYear()} {siteData.companyName}
           </div>
         </div>
       </footer>

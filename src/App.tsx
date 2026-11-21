@@ -125,5 +125,5 @@ export default function App() {
     );
   }
 
-  return <PublicWebsite siteData={siteData} onNavigate={navigate} />;
+  return <PublicWebsite siteData={siteData} />;
 }
