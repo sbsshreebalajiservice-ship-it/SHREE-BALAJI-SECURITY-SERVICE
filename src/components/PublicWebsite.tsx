@@ -107,7 +107,7 @@ export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
               e.preventDefault();
               scrollToSection('home');
             }}
-            className="inline-flex items-center gap-3 font-display text-lg sm:text-xl font-extrabold tracking-tight text-white uppercase whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-400"
+            className="inline-flex items-center gap-3 font-display text-base sm:text-lg font-extrabold tracking-[0.08em] [word-spacing:0.22em] text-white uppercase whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-400"
           >
             <img
               src={LOGO_IMAGE}
@@ -226,7 +226,7 @@ export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
                     className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover border border-amber-400/50 shrink-0"
                   />
                   <div>
-                    <div className="font-display text-xl sm:text-2xl font-extrabold tracking-tight text-amber-400 uppercase leading-tight">
+                    <div className="font-display text-xl sm:text-2xl font-extrabold tracking-[0.08em] [word-spacing:0.24em] text-amber-400 uppercase leading-tight">
                       {siteData.companyName}
                     </div>
                     <p className="text-xs sm:text-sm font-medium text-slate-300 mt-1">
@@ -597,7 +597,7 @@ export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
               className="w-12 h-12 rounded-full object-cover border border-amber-400/50 shrink-0"
             />
             <div>
-              <p className="font-display font-extrabold text-white text-base tracking-tight uppercase">
+              <p className="font-display font-extrabold text-white text-base tracking-[0.07em] [word-spacing:0.2em] uppercase">
                 {siteData.companyName} {siteData.companyTag}
               </p>
               <p className="text-sm text-slate-400 mt-1">

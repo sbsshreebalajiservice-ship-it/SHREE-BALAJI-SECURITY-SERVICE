@@ -348,7 +348,7 @@ export function AdminPanel({
               <h1 className="font-display text-xl font-extrabold text-slate-900">
                 {isUnclaimed ? 'Set Up Admin Password' : 'Admin Sign In'}
               </h1>
-              <p className="text-xs font-semibold text-slate-600 uppercase tracking-tight">
+              <p className="text-xs font-semibold text-slate-600 uppercase tracking-[0.07em] [word-spacing:0.2em]">
                 {siteData.companyName}
               </p>
             </div>
@@ -453,7 +453,7 @@ export function AdminPanel({
             referrerPolicy="no-referrer"
             className="w-9 h-9 rounded-full object-cover border border-amber-400/60 shrink-0"
           />
-          <span className="font-display font-extrabold text-white text-sm tracking-tight uppercase truncate">
+          <span className="font-display font-extrabold text-white text-xs tracking-[0.07em] [word-spacing:0.2em] uppercase truncate">
             {siteData.companyName}
           </span>
         </div>
