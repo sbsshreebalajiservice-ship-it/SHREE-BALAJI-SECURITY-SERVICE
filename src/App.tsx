@@ -5,13 +5,13 @@ import type { SiteData } from './types';
 
 const FALLBACK_SITE_DATA: SiteData = {
   companyName: 'Shree Balaji Security',
-  companyTag: 'Security Services',
+  companyTag: 'Security Services.',
   heroTitle: 'Your Safety Is Our Top Priority',
   heroSubtitle:
     '24/7 Professional Security Guards, Corporate Protection, Event Security, and Advanced CCTV Surveillance Solutions across India.',
-  phone: '+91 98765 43210',
-  email: 'info@shreebalajisecurity.in',
-  address: 'MADHYA PRADESH',
+  phone: '7566514338',
+  email: 'sbs.shreebalajiservice@gmail.com',
+  address: 'Madhya Pradesh, India',
   stat1Num: '10+',
   stat1Label: 'Years of Experience',
   stat2Num: '500+',
