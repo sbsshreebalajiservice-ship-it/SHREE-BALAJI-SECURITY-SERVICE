@@ -63,8 +63,7 @@ const DATA_FILE = path.join(ROOT_DIR, 'data.json');
 const ALLOWED_STATUSES: ReadonlyArray<InquiryStatus> = ['Pending', 'Contacted', 'Completed'];
 
 const DEFAULT_SERVICE_IMAGES: Record<string, string> = {
-  guarding: '/src/assets/images/manned_guarding_1.png',
-  guardingSecondary: '/src/assets/images/manned_guarding_2.png',
+  guarding: '/src/assets/images/service_manned_guarding_1795262487636.jpg',
   cctv: '/src/assets/images/service_cctv_surveillance_1795262486918.jpg',
   corporate: '/src/assets/images/hero_security_command_1795262486785.jpg',
   event: '/src/assets/images/service_corporate_event_1795262486631.jpg',
@@ -103,7 +102,6 @@ const defaultSiteData: SiteData = {
       title: 'Manned Guarding',
       desc: 'Disciplined, police-verified security guards for residential societies, offices, banks, and industrial plants.',
       imageUrl: DEFAULT_SERVICE_IMAGES.guarding,
-      secondaryImageUrl: DEFAULT_SERVICE_IMAGES.guardingSecondary,
     },
     {
       id: 2,

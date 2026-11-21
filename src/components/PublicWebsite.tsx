@@ -352,31 +352,14 @@ export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
                     className={`${isWide} bg-white border border-slate-200 rounded-lg overflow-hidden flex flex-col justify-between transition-colors duration-150 hover:border-slate-300`}
                   >
                     <div>
-                      {srv.secondaryImageUrl ? (
-                        <div className="grid grid-cols-2 gap-1 bg-slate-900 h-72 sm:h-80 w-full overflow-hidden">
-                          <ResilientImage
-                            src={srv.imageUrl}
-                            alt={`${srv.title} officer 1`}
-                            fallbackTitle={srv.title}
-                            className="w-full h-full object-cover object-top"
-                          />
-                          <ResilientImage
-                            src={srv.secondaryImageUrl}
-                            alt={`${srv.title} officer 2`}
-                            fallbackTitle={srv.title}
-                            className="w-full h-full object-cover object-top"
-                          />
-                        </div>
-                      ) : (
-                        <div className="aspect-[16/9] sm:aspect-[4/3] max-h-64 w-full overflow-hidden bg-slate-900 relative">
-                          <ResilientImage
-                            src={srv.imageUrl}
-                            alt={srv.title}
-                            fallbackTitle={srv.title}
-                            className="w-full h-full object-cover object-top"
-                          />
-                        </div>
-                      )}
+                      <div className="aspect-[16/9] sm:aspect-[4/3] max-h-64 w-full overflow-hidden bg-slate-900 relative">
+                        <ResilientImage
+                          src={srv.imageUrl}
+                          alt={srv.title}
+                          fallbackTitle={srv.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
                       <div className="p-6 sm:p-7">
                         <div className="flex items-center gap-2 text-xs text-slate-500 font-medium mb-2">
                           <span className="font-mono tabular-nums">{numPrefix}</span>

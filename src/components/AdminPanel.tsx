@@ -35,8 +35,7 @@ type StatusFilter = 'All' | InquiryStatus;
 const LOGO_IMAGE = '/src/assets/images/shree_balaji_logo.png';
 
 const IMAGE_PRESETS = [
-  { label: 'Manned Guarding (Guard 1)', value: '/src/assets/images/manned_guarding_1.png' },
-  { label: 'Manned Guarding (Guard 2)', value: '/src/assets/images/manned_guarding_2.png' },
+  { label: 'Manned Guarding', value: '/src/assets/images/service_manned_guarding_1795262487636.jpg' },
   { label: 'CCTV Control Room', value: '/src/assets/images/service_cctv_surveillance_1795262486918.jpg' },
   { label: 'Corporate Lobby', value: '/src/assets/images/hero_security_command_1795262486785.jpg' },
   { label: 'Event & VIP Team', value: '/src/assets/images/service_corporate_event_1795262486631.jpg' },

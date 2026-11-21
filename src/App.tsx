@@ -35,8 +35,7 @@ const FALLBACK_SITE_DATA: SiteData = {
       category: 'Manned Guarding',
       title: 'Manned Guarding',
       desc: 'Disciplined, police-verified security guards for residential societies, offices, banks, and industrial plants.',
-      imageUrl: '/src/assets/images/manned_guarding_1.png',
-      secondaryImageUrl: '/src/assets/images/manned_guarding_2.png',
+      imageUrl: '/src/assets/images/service_manned_guarding_1795262487636.jpg',
     },
     {
       id: 2,
