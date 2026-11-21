@@ -19,6 +19,7 @@ interface PublicWebsiteProps {
 }
 
 const HERO_IMAGE = '/src/assets/images/hero_security_command_1795262486785.jpg';
+const LOGO_IMAGE = '/src/assets/images/shree_balaji_logo.png';
 
 export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -106,9 +107,15 @@ export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
               e.preventDefault();
               scrollToSection('home');
             }}
-            className="font-display text-lg font-bold tracking-tight text-white whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-400"
+            className="inline-flex items-center gap-3 font-display text-lg sm:text-xl font-extrabold tracking-tight text-white uppercase whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-400"
           >
-            {siteData.companyName}
+            <img
+              src={LOGO_IMAGE}
+              alt={`${siteData.companyName} official logo`}
+              referrerPolicy="no-referrer"
+              className="w-10 h-10 rounded-full object-cover border border-amber-400/60 shrink-0"
+            />
+            <span>{siteData.companyName}</span>
           </a>
 
           <nav
@@ -211,11 +218,24 @@ export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 lg:py-20">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
               <div className="lg:col-span-6 flex flex-col justify-center">
-                <p className="text-xs sm:text-sm font-medium text-amber-400 tracking-wide mb-4">
-                  {siteData.companyTag} · PSARA Compliant · {siteData.address}
-                </p>
+                <div className="flex items-center gap-4 mb-5">
+                  <img
+                    src={LOGO_IMAGE}
+                    alt={`${siteData.companyName} crest`}
+                    referrerPolicy="no-referrer"
+                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover border border-amber-400/50 shrink-0"
+                  />
+                  <div>
+                    <div className="font-display text-xl sm:text-2xl font-extrabold tracking-tight text-amber-400 uppercase leading-tight">
+                      {siteData.companyName}
+                    </div>
+                    <p className="text-xs sm:text-sm font-medium text-slate-300 mt-1">
+                      {siteData.companyTag} · PSARA Compliant · {siteData.address}
+                    </p>
+                  </div>
+                </div>
                 <h1
-                  className="font-display font-bold tracking-tight text-white leading-[1.08] mb-6"
+                  className="font-display font-extrabold tracking-tight text-white leading-[1.08] mb-6"
                   style={{ fontSize: 'clamp(2.25rem, 4vw, 3.75rem)', textWrap: 'balance' }}
                 >
                   {siteData.heroTitle}
@@ -569,13 +589,21 @@ export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
       {/* Quiet Footer */}
       <footer className="bg-slate-950 text-slate-300 border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div>
-            <p className="font-display font-bold text-white text-base">
-              {siteData.companyName} {siteData.companyTag}
-            </p>
-            <p className="text-sm text-slate-400 mt-1">
-              Office: {siteData.address} · Email: {siteData.email} · Phone: {siteData.phone}
-            </p>
+          <div className="flex items-center gap-4">
+            <img
+              src={LOGO_IMAGE}
+              alt={`${siteData.companyName} logo`}
+              referrerPolicy="no-referrer"
+              className="w-12 h-12 rounded-full object-cover border border-amber-400/50 shrink-0"
+            />
+            <div>
+              <p className="font-display font-extrabold text-white text-base tracking-tight uppercase">
+                {siteData.companyName} {siteData.companyTag}
+              </p>
+              <p className="text-sm text-slate-400 mt-1">
+                Office: {siteData.address} · Email: {siteData.email} · Phone: {siteData.phone}
+              </p>
+            </div>
           </div>
           <div className="flex items-center gap-6 text-sm shrink-0">
             <a

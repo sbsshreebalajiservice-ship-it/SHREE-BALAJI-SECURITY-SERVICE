@@ -5,13 +5,11 @@ import {
   ExternalLink,
   FileText,
   Layers,
-  Lock,
   LogOut,
   Plus,
   RefreshCw,
   Search,
   Settings,
-  Shield,
   Trash2,
 } from 'lucide-react';
 import type {
@@ -33,6 +31,8 @@ interface AdminPanelProps {
 
 type AdminTab = 'inquiries' | 'settings' | 'services';
 type StatusFilter = 'All' | InquiryStatus;
+
+const LOGO_IMAGE = '/src/assets/images/shree_balaji_logo.png';
 
 const IMAGE_PRESETS = [
   { label: 'Manned Guarding', value: '/src/assets/images/service_manned_guarding_1795262487636.jpg' },
@@ -337,15 +337,20 @@ export function AdminPanel({
     return (
       <div className="min-h-screen bg-slate-100 flex flex-col justify-center items-center px-6 py-12">
         <div className="w-full max-w-md bg-white border border-slate-200 rounded-lg p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-md bg-slate-950 text-amber-400 flex items-center justify-center shrink-0">
-              <Lock className="w-5 h-5" />
-            </div>
+          <div className="flex items-center gap-3.5 mb-6">
+            <img
+              src={LOGO_IMAGE}
+              alt={`${siteData.companyName} logo`}
+              referrerPolicy="no-referrer"
+              className="w-12 h-12 rounded-full object-cover border border-amber-400/60 shrink-0"
+            />
             <div>
-              <h1 className="font-display text-xl font-bold text-slate-900">
+              <h1 className="font-display text-xl font-extrabold text-slate-900">
                 {isUnclaimed ? 'Set Up Admin Password' : 'Admin Sign In'}
               </h1>
-              <p className="text-xs text-slate-500">{siteData.companyName} Operations Console</p>
+              <p className="text-xs font-semibold text-slate-600 uppercase tracking-tight">
+                {siteData.companyName}
+              </p>
             </div>
           </div>
 
@@ -441,9 +446,14 @@ export function AdminPanel({
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col lg:flex-row">
       {/* Sidebar */}
       <aside className="lg:w-64 bg-slate-950 text-slate-200 border-b lg:border-b-0 lg:border-r border-slate-800 shrink-0">
-        <div className="h-16 px-6 flex items-center gap-2.5 border-b border-slate-800">
-          <Shield className="w-5 h-5 text-amber-400 shrink-0" />
-          <span className="font-display font-bold text-white text-base truncate">
+        <div className="h-16 px-5 flex items-center gap-3 border-b border-slate-800">
+          <img
+            src={LOGO_IMAGE}
+            alt={`${siteData.companyName} logo`}
+            referrerPolicy="no-referrer"
+            className="w-9 h-9 rounded-full object-cover border border-amber-400/60 shrink-0"
+          />
+          <span className="font-display font-extrabold text-white text-sm tracking-tight uppercase truncate">
             {siteData.companyName}
           </span>
         </div>
