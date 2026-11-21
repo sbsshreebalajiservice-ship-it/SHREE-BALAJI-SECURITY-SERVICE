@@ -1,0 +1,596 @@
+import { useState, type FormEvent } from 'react';
+import {
+  ArrowRight,
+  CheckCircle2,
+  AlertCircle,
+  Mail,
+  MapPin,
+  Menu,
+  Phone,
+  ShieldCheck,
+  X,
+} from 'lucide-react';
+import type { SiteData } from '../types';
+import { ResilientImage } from './ResilientImage';
+
+interface PublicWebsiteProps {
+  siteData: SiteData;
+  onNavigate: (path: string) => void;
+}
+
+const HERO_IMAGE = '/src/assets/images/hero_security_command_1795262486785.jpg';
+
+export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [service, setService] = useState('');
+  const [message, setMessage] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  const scrollToSection = (id: string) => {
+    setMobileMenuOpen(false);
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handleSelectServiceForQuote = (serviceTitle: string) => {
+    setService(serviceTitle);
+    scrollToSection('contact');
+  };
+
+  const handleQuoteSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setFeedback(null);
+    setSubmitting(true);
+
+    try {
+      const res = await fetch('/api/quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name.trim(),
+          phone: phone.trim(),
+          email: email.trim(),
+          service,
+          message: message.trim(),
+        }),
+      });
+      const json = (await res.json()) as { success?: boolean; message?: string; error?: string };
+
+      if (res.ok && json.success) {
+        setFeedback({
+          type: 'success',
+          text: json.message || 'Your quote request has been saved. Our team will call you shortly.',
+        });
+        setName('');
+        setPhone('');
+        setEmail('');
+        setService('');
+        setMessage('');
+      } else {
+        setFeedback({
+          type: 'error',
+          text: json.error || 'Please check your details and try again.',
+        });
+      }
+    } catch {
+      setFeedback({
+        type: 'error',
+        text: 'Network error while submitting your request. Please call our 24/7 desk.',
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const stats = [
+    { num: siteData.stat1Num, label: siteData.stat1Label },
+    { num: siteData.stat2Num, label: siteData.stat2Label },
+    { num: siteData.stat3Num, label: siteData.stat3Label },
+    { num: siteData.stat4Num, label: siteData.stat4Label },
+  ];
+
+  return (
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+      {/* Top Bar Contract: Zone 1 (Wordmark) — Zone 2 (4 Nav Links) — Zone 3 (1 Primary CTA) */}
+      <header className="sticky top-0 z-50 bg-slate-950/95 backdrop-blur-sm border-b border-slate-800">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between gap-8">
+          <a
+            href="#home"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('home');
+            }}
+            className="font-display text-lg font-bold tracking-tight text-white whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-400"
+          >
+            {siteData.companyName}
+          </a>
+
+          <nav
+            aria-label="Primary navigation"
+            className="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300"
+          >
+            <a
+              href="#home"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('home');
+              }}
+              className="hover:text-white hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
+            >
+              Home
+            </a>
+            <a
+              href="#services"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('services');
+              }}
+              className="hover:text-white hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
+            >
+              Services
+            </a>
+            <a
+              href="#about"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('about');
+              }}
+              className="hover:text-white hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
+            >
+              About Us
+            </a>
+            <a
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('contact');
+              }}
+              className="hover:text-white hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
+            >
+              Contact
+            </a>
+          </nav>
+
+          <div className="flex items-center gap-3 shrink-0">
+            <button
+              type="button"
+              onClick={() => scrollToSection('contact')}
+              className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-md transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+            >
+              Request Quote
+            </button>
+            <button
+              type="button"
+              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={mobileMenuOpen}
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              className="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-md text-slate-200 hover:bg-slate-800 transition-colors cursor-pointer"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
+
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-slate-800 bg-slate-950 px-6 py-4 flex flex-col gap-2">
+            {[
+              { label: 'Home', id: 'home' },
+              { label: 'Services', id: 'services' },
+              { label: 'About Us', id: 'about' },
+              { label: 'Contact', id: 'contact' },
+            ].map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => scrollToSection(item.id)}
+                className="text-left py-2.5 px-2 text-sm font-medium text-slate-200 hover:text-amber-400 transition-colors cursor-pointer"
+              >
+                {item.label}
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => scrollToSection('contact')}
+              className="mt-2 w-full py-3 px-4 text-sm font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-md transition-colors cursor-pointer"
+            >
+              Request Quote
+            </button>
+          </div>
+        )}
+      </header>
+
+      <main className="flex-1">
+        {/* Hero Split Section + Full-Width KPI Strip */}
+        <section id="home" className="bg-slate-950 text-white border-b border-slate-800">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 lg:py-20">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
+              <div className="lg:col-span-6 flex flex-col justify-center">
+                <p className="text-xs sm:text-sm font-medium text-amber-400 tracking-wide mb-4">
+                  {siteData.companyTag} · PSARA Compliant · {siteData.address}
+                </p>
+                <h1
+                  className="font-display font-bold tracking-tight text-white leading-[1.08] mb-6"
+                  style={{ fontSize: 'clamp(2.25rem, 4vw, 3.75rem)', textWrap: 'balance' }}
+                >
+                  {siteData.heroTitle}
+                </h1>
+                <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl mb-8">
+                  {siteData.heroSubtitle}
+                </p>
+
+                <div className="flex flex-wrap items-center gap-4 mb-8">
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('contact')}
+                    className="inline-flex items-center gap-2 px-6 py-3.5 text-sm sm:text-base font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-md transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+                  >
+                    <span>Request Free Quote</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('services')}
+                    className="inline-flex items-center gap-2 px-5 py-3.5 text-sm sm:text-base font-medium text-slate-200 hover:text-white border border-slate-700 hover:border-slate-500 rounded-md transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer"
+                  >
+                    Explore Services
+                  </button>
+                </div>
+
+                <div className="pt-6 border-t border-slate-800/80 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-300">
+                  <span className="text-slate-400">24/7 Control Room Dispatch:</span>
+                  <a
+                    href={`tel:${siteData.phone.replace(/\s+/g, '')}`}
+                    className="inline-flex items-center gap-2 font-mono tabular-nums font-medium text-white hover:text-amber-400 transition-colors"
+                  >
+                    <Phone className="w-4 h-4 text-amber-400" />
+                    <span>{siteData.phone}</span>
+                  </a>
+                </div>
+              </div>
+
+              <div className="lg:col-span-6 relative min-h-[280px] sm:min-h-[360px] lg:min-h-[440px] rounded-lg overflow-hidden border border-slate-800 bg-slate-900">
+                <ResilientImage
+                  src={HERO_IMAGE}
+                  alt={`${siteData.companyName} security officer on duty at commercial headquarters`}
+                  fallbackTitle={siteData.companyName}
+                  className="w-full h-full lg:h-full object-cover"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"
+                />
+                <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 flex items-center justify-between gap-4 text-xs sm:text-sm text-slate-200">
+                  <span className="font-medium">Command & Guarding Operations</span>
+                  <span className="font-mono text-amber-300 tabular-nums">Active 24/7</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 4-Column KPI Strip */}
+          <div className="bg-slate-900/90 border-t border-slate-800">
+            <div className="max-w-7xl mx-auto px-6 lg:px-10 py-7 grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0 lg:divide-x lg:divide-slate-800">
+              {stats.map((item, idx) => (
+                <div key={idx} className={idx > 0 ? 'lg:pl-8' : ''}>
+                  <div className="font-mono tabular-nums text-2xl sm:text-3xl font-semibold text-amber-400">
+                    {item.num}
+                  </div>
+                  <div className="text-sm text-slate-300 mt-1">{item.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Core Services Section */}
+        <section id="services" className="py-16 lg:py-24 bg-slate-50">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10">
+            <div className="max-w-2xl mb-12">
+              <p className="text-sm font-medium text-amber-700 mb-2">Security Capabilities</p>
+              <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-3">
+                Our Security Services
+              </h2>
+              <p className="text-base text-slate-600 leading-relaxed">
+                Disciplined manned guarding, corporate protection, event management, and remote CCTV surveillance tailored to your site risk profile.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
+              {siteData.services.map((srv, index) => {
+                const isWide =
+                  siteData.services.length >= 4 && (index === 0 || index === 3)
+                    ? 'lg:col-span-7'
+                    : siteData.services.length >= 4
+                      ? 'lg:col-span-5'
+                      : 'lg:col-span-6';
+                const numPrefix = String(index + 1).padStart(2, '0');
+
+                return (
+                  <article
+                    key={srv.id}
+                    className={`${isWide} bg-white border border-slate-200 rounded-lg overflow-hidden flex flex-col justify-between transition-colors duration-150 hover:border-slate-300`}
+                  >
+                    <div>
+                      <div className="aspect-[16/9] sm:aspect-[4/3] max-h-64 w-full overflow-hidden bg-slate-900 relative">
+                        <ResilientImage
+                          src={srv.imageUrl}
+                          alt={srv.title}
+                          fallbackTitle={srv.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="p-6 sm:p-7">
+                        <div className="flex items-center gap-2 text-xs text-slate-500 font-medium mb-2">
+                          <span className="font-mono tabular-nums">{numPrefix}</span>
+                          <span aria-hidden="true">·</span>
+                          <span>{srv.category}</span>
+                        </div>
+                        <h3 className="font-display text-xl font-bold text-slate-900 tracking-tight mb-2">
+                          {numPrefix}. {srv.title}
+                        </h3>
+                        <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                          {srv.desc}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="px-6 sm:px-7 pb-6 pt-2">
+                      <button
+                        type="button"
+                        onClick={() => handleSelectServiceForQuote(srv.title)}
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900 hover:text-amber-700 transition-colors cursor-pointer"
+                      >
+                        <span>Request {srv.title}</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* Proof & Operations / About Us Section */}
+        <section id="about" className="py-16 lg:py-24 bg-slate-100 border-y border-slate-200">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+            <div className="lg:col-span-7">
+              <p className="text-sm font-medium text-amber-700 mb-2">Operational Standards</p>
+              <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-4">
+                {siteData.aboutTitle}
+              </h2>
+              <p className="text-base text-slate-600 leading-relaxed max-w-2xl mb-8">
+                {siteData.aboutDesc}
+              </p>
+
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {siteData.aboutPoints.map((point, idx) => (
+                  <li
+                    key={idx}
+                    className="bg-white border border-slate-200 rounded-lg p-4 flex items-start gap-3"
+                  >
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                    <span className="text-sm font-medium text-slate-800 leading-snug">{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="lg:col-span-5 bg-slate-950 text-white rounded-lg p-7 sm:p-9 border border-slate-800">
+              <div className="flex items-center gap-3 mb-4">
+                <ShieldCheck className="w-6 h-6 text-amber-400 shrink-0" />
+                <h3 className="font-display text-xl font-bold tracking-tight text-white">
+                  24/7 Emergency Control Room
+                </h3>
+              </div>
+              <p className="text-sm text-slate-300 leading-relaxed mb-6">
+                Need rapid guard deployment, site security audit, or urgent event protection? Our operations desk responds around the clock.
+              </p>
+
+              <div className="space-y-4 border-t border-slate-800 pt-6">
+                <a
+                  href={`tel:${siteData.phone.replace(/\s+/g, '')}`}
+                  className="flex items-center gap-3 text-base font-mono tabular-nums font-semibold text-amber-400 hover:text-amber-300 transition-colors"
+                >
+                  <Phone className="w-4 h-4 shrink-0" />
+                  <span>{siteData.phone}</span>
+                </a>
+                <a
+                  href={`mailto:${siteData.email}`}
+                  className="flex items-center gap-3 text-sm text-slate-300 hover:text-white transition-colors"
+                >
+                  <Mail className="w-4 h-4 text-slate-400 shrink-0" />
+                  <span>{siteData.email}</span>
+                </a>
+                <div className="flex items-start gap-3 text-sm text-slate-300">
+                  <MapPin className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+                  <span>{siteData.address}</span>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => scrollToSection('contact')}
+                className="mt-7 w-full py-3 px-4 bg-amber-400 hover:bg-amber-300 text-slate-950 font-semibold text-sm rounded-md transition-colors cursor-pointer"
+              >
+                Schedule Site Security Assessment
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Lead Capture / Request a Quote Form */}
+        <section id="contact" className="py-16 lg:py-24 bg-white">
+          <div className="max-w-4xl mx-auto px-6 lg:px-10">
+            <div className="text-center max-w-2xl mx-auto mb-10">
+              <p className="text-sm font-medium text-amber-700 mb-2">Request Deployment Proposal</p>
+              <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-3">
+                Request a Free Quote
+              </h2>
+              <p className="text-base text-slate-600">
+                Share your site location, shift requirements, and guard count. Our operations team will respond promptly with a tailored security plan.
+              </p>
+            </div>
+
+            <div className="bg-slate-50 border border-slate-200 rounded-lg p-6 sm:p-10">
+              <form onSubmit={handleQuoteSubmit} className="space-y-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label
+                      htmlFor="quote-name"
+                      className="block text-sm font-medium text-slate-700 mb-1.5"
+                    >
+                      Full Name *
+                    </label>
+                    <input
+                      id="quote-name"
+                      type="text"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="e.g. Rajesh Sharma"
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-md text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-slate-900"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="quote-phone"
+                      className="block text-sm font-medium text-slate-700 mb-1.5"
+                    >
+                      Phone Number *
+                    </label>
+                    <input
+                      id="quote-phone"
+                      type="tel"
+                      required
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="+91 98XXX XXXXX"
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-md text-sm font-mono tabular-nums text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-slate-900"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label
+                      htmlFor="quote-email"
+                      className="block text-sm font-medium text-slate-700 mb-1.5"
+                    >
+                      Email Address
+                    </label>
+                    <input
+                      id="quote-email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="name@company.com"
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-md text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-slate-900"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="quote-service"
+                      className="block text-sm font-medium text-slate-700 mb-1.5"
+                    >
+                      Security Service *
+                    </label>
+                    <select
+                      id="quote-service"
+                      required
+                      value={service}
+                      onChange={(e) => setService(e.target.value)}
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-md text-sm text-slate-900 focus:outline-none focus:border-slate-900"
+                    >
+                      <option value="">Select Security Service *</option>
+                      {siteData.services.map((srv) => (
+                        <option key={srv.id} value={srv.title}>
+                          {srv.title}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="quote-message"
+                    className="block text-sm font-medium text-slate-700 mb-1.5"
+                  >
+                    Site Location & Requirement Details
+                  </label>
+                  <textarea
+                    id="quote-message"
+                    rows={4}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Mention site address, number of shifts or guards needed, or CCTV coverage area..."
+                    className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-md text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-slate-900"
+                  />
+                </div>
+
+                {feedback && (
+                  <div
+                    role="status"
+                    className={`p-3.5 rounded-md border flex items-start gap-2.5 text-sm font-medium ${
+                      feedback.type === 'success'
+                        ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
+                        : 'bg-red-50 border-red-200 text-red-800'
+                    }`}
+                  >
+                    {feedback.type === 'success' ? (
+                      <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-emerald-600" />
+                    ) : (
+                      <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-600" />
+                    )}
+                    <span>{feedback.text}</span>
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="w-full sm:w-auto px-8 py-3.5 bg-slate-950 hover:bg-slate-800 disabled:opacity-60 text-white text-sm font-semibold rounded-md transition-colors duration-150 cursor-pointer"
+                >
+                  {submitting ? 'Submitting Inquiry...' : 'Submit Quote Request'}
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Quiet Footer */}
+      <footer className="bg-slate-950 text-slate-300 border-t border-slate-800">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div>
+            <p className="font-display font-bold text-white text-base">
+              {siteData.companyName} {siteData.companyTag}
+            </p>
+            <p className="text-sm text-slate-400 mt-1">
+              Office: {siteData.address} · Email: {siteData.email} · Phone: {siteData.phone}
+            </p>
+          </div>
+          <div className="flex items-center gap-6 text-sm shrink-0">
+            <a
+              href="/admin"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate('/admin');
+              }}
+              className="text-amber-400 hover:text-amber-300 font-medium transition-colors whitespace-nowrap shrink-0"
+            >
+              Admin Panel
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
