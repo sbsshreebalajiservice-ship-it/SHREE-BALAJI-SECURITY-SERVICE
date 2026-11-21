@@ -95,7 +95,7 @@ export function PublicWebsite({ siteData }: PublicWebsiteProps) {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 relative">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 relative overflow-x-hidden">
       {/* Subtle Background Logo Watermark */}
       <div
         aria-hidden="true"
@@ -105,26 +105,26 @@ export function PublicWebsite({ siteData }: PublicWebsiteProps) {
           src={LOGO_IMAGE}
           alt=""
           referrerPolicy="no-referrer"
-          className="w-[360px] sm:w-[480px] lg:w-[560px] aspect-square object-contain opacity-[0.05] [mask-image:radial-gradient(circle_at_center,black_38%,transparent_72%)]"
+          className="w-[260px] sm:w-[440px] lg:w-[540px] aspect-square object-contain opacity-[0.05] [mask-image:radial-gradient(circle_at_center,black_38%,transparent_72%)]"
         />
       </div>
 
       {/* Top Bar Contract: Zone 1 (Wordmark) — Zone 2 (4 Nav Links) — Zone 3 (1 Primary CTA) */}
       <header className="sticky top-0 z-50 bg-slate-950/95 backdrop-blur-sm border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between gap-8">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between gap-3 sm:gap-8">
           <a
             href="#home"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('home');
             }}
-            className="inline-flex items-center gap-3 font-display text-base sm:text-lg font-extrabold tracking-[0.08em] [word-spacing:0.22em] text-white uppercase whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-400"
+            className="inline-flex items-center gap-2.5 sm:gap-3 font-display text-[13px] sm:text-lg font-extrabold tracking-[0.04em] sm:tracking-[0.08em] [word-spacing:0.14em] sm:[word-spacing:0.22em] text-white uppercase whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-400"
           >
             <img
               src={LOGO_IMAGE}
               alt={`${siteData.companyName} official logo`}
               referrerPolicy="no-referrer"
-              className="w-10 h-10 rounded-full object-cover border border-amber-400/60 shrink-0"
+              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border border-amber-400/60 shrink-0"
             />
             <span>{siteData.companyName}</span>
           </a>
@@ -226,29 +226,18 @@ export function PublicWebsite({ siteData }: PublicWebsiteProps) {
       <main className="flex-1">
         {/* Hero Split Section + Full-Width KPI Strip */}
         <section id="home" className="relative overflow-hidden bg-slate-950 text-white border-b border-slate-800">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none select-none absolute inset-0 flex items-center justify-center overflow-hidden"
-          >
-            <img
-              src={LOGO_IMAGE}
-              alt=""
-              referrerPolicy="no-referrer"
-              className="w-[460px] sm:w-[620px] aspect-square object-contain opacity-[0.07] mix-blend-screen [mask-image:radial-gradient(circle_at_center,black_35%,transparent_72%)]"
-            />
-          </div>
-          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 py-14 lg:py-20">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
+          <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-10 sm:py-14 lg:py-20">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-stretch">
               <div className="lg:col-span-6 flex flex-col justify-center">
-                <div className="flex items-center gap-4 mb-5">
+                <div className="flex items-center gap-3.5 sm:gap-4 mb-5">
                   <img
                     src={LOGO_IMAGE}
                     alt={`${siteData.companyName} crest`}
                     referrerPolicy="no-referrer"
-                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover border border-amber-400/50 shrink-0"
+                    className="w-14 h-14 sm:w-20 sm:h-20 rounded-xl object-cover border border-amber-400/50 shrink-0"
                   />
-                  <div>
-                    <div className="font-display text-xl sm:text-2xl font-extrabold tracking-[0.08em] [word-spacing:0.24em] text-amber-400 uppercase leading-tight">
+                  <div className="min-w-0">
+                    <div className="font-display text-base sm:text-2xl font-extrabold tracking-[0.05em] sm:tracking-[0.08em] [word-spacing:0.14em] sm:[word-spacing:0.24em] text-amber-400 uppercase leading-tight">
                       {siteData.companyName}
                     </div>
                     <p className="text-xs sm:text-sm font-medium text-slate-300 mt-1">
@@ -257,20 +246,20 @@ export function PublicWebsite({ siteData }: PublicWebsiteProps) {
                   </div>
                 </div>
                 <h1
-                  className="font-display font-extrabold tracking-tight text-white leading-[1.08] mb-6"
-                  style={{ fontSize: 'clamp(2.25rem, 4vw, 3.75rem)', textWrap: 'balance' }}
+                  className="font-display font-extrabold tracking-tight text-white leading-[1.08] mb-5 sm:mb-6"
+                  style={{ fontSize: 'clamp(2rem, 4vw, 3.75rem)', textWrap: 'balance' }}
                 >
                   {siteData.heroTitle}
                 </h1>
-                <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl mb-8">
+                <p className="text-sm sm:text-lg text-slate-300 leading-relaxed max-w-xl mb-7 sm:mb-8">
                   {siteData.heroSubtitle}
                 </p>
 
-                <div className="flex flex-wrap items-center gap-4 mb-8">
+                <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-4 mb-7 sm:mb-8">
                   <button
                     type="button"
                     onClick={() => scrollToSection('contact')}
-                    className="inline-flex items-center gap-2 px-6 py-3.5 text-sm sm:text-base font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-md transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm sm:text-base font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-md transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
                   >
                     <span>Request Free Quote</span>
                     <ArrowRight className="w-4 h-4" />
@@ -278,7 +267,7 @@ export function PublicWebsite({ siteData }: PublicWebsiteProps) {
                   <button
                     type="button"
                     onClick={() => scrollToSection('services')}
-                    className="inline-flex items-center gap-2 px-5 py-3.5 text-sm sm:text-base font-medium text-slate-200 hover:text-white border border-slate-700 hover:border-slate-500 rounded-md transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 text-sm sm:text-base font-medium text-slate-200 hover:text-white border border-slate-700 hover:border-slate-500 rounded-md transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer"
                   >
                     Explore Services
                   </button>
@@ -311,8 +300,8 @@ export function PublicWebsite({ siteData }: PublicWebsiteProps) {
                 </div>
               </div>
 
-              <div className="lg:col-span-6 relative min-h-[380px] sm:min-h-[460px] lg:min-h-[500px] rounded-lg overflow-hidden border border-slate-800 bg-[#0b0c0e] flex flex-col justify-between">
-                <div className="relative flex-1 w-full h-full overflow-hidden">
+              <div className="lg:col-span-6 relative rounded-lg overflow-hidden border border-slate-800 bg-[#0b0c0e] flex flex-col justify-between">
+                <div className="relative aspect-square sm:aspect-[5/4] lg:aspect-auto lg:flex-1 lg:min-h-[480px] w-full overflow-hidden">
                   <ResilientImage
                     src={LOGO_IMAGE}
                     alt={`${siteData.companyName} official crest`}
@@ -321,12 +310,12 @@ export function PublicWebsite({ siteData }: PublicWebsiteProps) {
                   />
                   <div
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-transparent"
+                    className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"
                   />
                 </div>
-                <div className="relative z-10 px-5 sm:px-6 py-4 flex items-center justify-between gap-4 text-xs sm:text-sm text-slate-200 border-t border-slate-800/80 bg-slate-950/90">
+                <div className="relative z-10 px-4 sm:px-6 py-3.5 sm:py-4 flex items-center justify-between gap-4 text-xs sm:text-sm text-slate-200 border-t border-slate-800/80 bg-slate-950/90">
                   <span className="font-medium">Command & Guarding Operations</span>
-                  <span className="font-mono text-amber-300 tabular-nums">Active 24/7</span>
+                  <span className="font-mono text-amber-300 tabular-nums shrink-0">Active 24/7</span>
                 </div>
               </div>
             </div>
@@ -334,13 +323,13 @@ export function PublicWebsite({ siteData }: PublicWebsiteProps) {
 
           {/* 4-Column KPI Strip */}
           <div className="bg-slate-900/90 border-t border-slate-800">
-            <div className="max-w-7xl mx-auto px-6 lg:px-10 py-7 grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0 lg:divide-x lg:divide-slate-800">
+            <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-6 sm:py-7 grid grid-cols-2 lg:grid-cols-4 gap-y-5 gap-x-4 lg:gap-0 lg:divide-x lg:divide-slate-800">
               {stats.map((item, idx) => (
                 <div key={idx} className={idx > 0 ? 'lg:pl-8' : ''}>
                   <div className="font-mono tabular-nums text-2xl sm:text-3xl font-semibold text-amber-400">
                     {item.num}
                   </div>
-                  <div className="text-sm text-slate-300 mt-1">{item.label}</div>
+                  <div className="text-xs sm:text-sm text-slate-300 mt-1">{item.label}</div>
                 </div>
               ))}
             </div>
@@ -348,8 +337,8 @@ export function PublicWebsite({ siteData }: PublicWebsiteProps) {
         </section>
 
         {/* Core Services Section */}
-        <section id="services" className="py-16 lg:py-24 bg-slate-50">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <section id="services" className="py-14 sm:py-16 lg:py-24 bg-slate-50">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
             <div className="max-w-2xl mb-12">
               <p className="text-sm font-medium text-amber-700 mb-2">Security Capabilities</p>
               <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-3">
@@ -417,8 +406,8 @@ export function PublicWebsite({ siteData }: PublicWebsiteProps) {
         </section>
 
         {/* Proof & Operations / About Us Section */}
-        <section id="about" className="py-16 lg:py-24 bg-slate-100 border-y border-slate-200">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        <section id="about" className="py-14 sm:py-16 lg:py-24 bg-slate-100 border-y border-slate-200">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-start">
             <div className="lg:col-span-7">
               <p className="text-sm font-medium text-amber-700 mb-2">Operational Standards</p>
               <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-4">
@@ -500,8 +489,8 @@ export function PublicWebsite({ siteData }: PublicWebsiteProps) {
         </section>
 
         {/* Lead Capture / Request a Quote Form */}
-        <section id="contact" className="py-16 lg:py-24 bg-white">
-          <div className="max-w-4xl mx-auto px-6 lg:px-10">
+        <section id="contact" className="py-14 sm:py-16 lg:py-24 bg-white">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-10">
             <div className="text-center max-w-2xl mx-auto mb-10">
               <p className="text-sm font-medium text-amber-700 mb-2">Request Deployment Proposal</p>
               <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-3">
@@ -642,19 +631,19 @@ export function PublicWebsite({ siteData }: PublicWebsiteProps) {
 
       {/* Quiet Footer */}
       <footer className="bg-slate-950 text-slate-300 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-9 sm:py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div className="flex items-start sm:items-center gap-3.5 sm:gap-4 min-w-0">
             <img
               src={LOGO_IMAGE}
               alt={`${siteData.companyName} logo`}
               referrerPolicy="no-referrer"
-              className="w-12 h-12 rounded-full object-cover border border-amber-400/50 shrink-0"
+              className="w-11 h-11 sm:w-12 sm:h-12 rounded-full object-cover border border-amber-400/50 shrink-0"
             />
-            <div>
-              <p className="font-display font-extrabold text-white text-base tracking-[0.07em] [word-spacing:0.2em] uppercase">
+            <div className="min-w-0">
+              <p className="font-display font-extrabold text-white text-sm sm:text-base tracking-[0.05em] sm:tracking-[0.07em] [word-spacing:0.14em] sm:[word-spacing:0.2em] uppercase break-words">
                 {siteData.companyName} {siteData.companyTag}
               </p>
-              <p className="text-sm text-slate-400 mt-1">
+              <p className="text-xs sm:text-sm text-slate-400 mt-1 break-words">
                 Office: {siteData.address} · Email: {siteData.email} · Phone: {siteData.phone}
               </p>
             </div>
