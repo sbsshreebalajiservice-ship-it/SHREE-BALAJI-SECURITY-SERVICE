@@ -95,7 +95,20 @@ export function PublicWebsite({ siteData }: PublicWebsiteProps) {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 relative">
+      {/* Subtle Background Logo Watermark */}
+      <div
+        aria-hidden="true"
+        className="fixed inset-0 z-[5] pointer-events-none select-none flex items-center justify-center overflow-hidden"
+      >
+        <img
+          src={LOGO_IMAGE}
+          alt=""
+          referrerPolicy="no-referrer"
+          className="w-[360px] sm:w-[480px] lg:w-[560px] aspect-square object-contain opacity-[0.05] [mask-image:radial-gradient(circle_at_center,black_38%,transparent_72%)]"
+        />
+      </div>
+
       {/* Top Bar Contract: Zone 1 (Wordmark) — Zone 2 (4 Nav Links) — Zone 3 (1 Primary CTA) */}
       <header className="sticky top-0 z-50 bg-slate-950/95 backdrop-blur-sm border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between gap-8">
@@ -212,8 +225,19 @@ export function PublicWebsite({ siteData }: PublicWebsiteProps) {
 
       <main className="flex-1">
         {/* Hero Split Section + Full-Width KPI Strip */}
-        <section id="home" className="bg-slate-950 text-white border-b border-slate-800">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 lg:py-20">
+        <section id="home" className="relative overflow-hidden bg-slate-950 text-white border-b border-slate-800">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none select-none absolute inset-0 flex items-center justify-center overflow-hidden"
+          >
+            <img
+              src={LOGO_IMAGE}
+              alt=""
+              referrerPolicy="no-referrer"
+              className="w-[460px] sm:w-[620px] aspect-square object-contain opacity-[0.07] mix-blend-screen [mask-image:radial-gradient(circle_at_center,black_35%,transparent_72%)]"
+            />
+          </div>
+          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 py-14 lg:py-20">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
               <div className="lg:col-span-6 flex flex-col justify-center">
                 <div className="flex items-center gap-4 mb-5">
@@ -287,20 +311,20 @@ export function PublicWebsite({ siteData }: PublicWebsiteProps) {
                 </div>
               </div>
 
-              <div className="lg:col-span-6 relative min-h-[320px] sm:min-h-[380px] lg:min-h-[440px] rounded-lg overflow-hidden border border-slate-800 bg-[#0d0e10] flex flex-col justify-between">
-                <div className="flex-1 flex items-center justify-center p-6 sm:p-8 pb-14">
+              <div className="lg:col-span-6 relative min-h-[380px] sm:min-h-[460px] lg:min-h-[500px] rounded-lg overflow-hidden border border-slate-800 bg-[#0b0c0e] flex flex-col justify-between">
+                <div className="relative flex-1 w-full h-full overflow-hidden">
                   <ResilientImage
                     src={LOGO_IMAGE}
                     alt={`${siteData.companyName} official crest`}
                     fallbackTitle={siteData.companyName}
-                    className="max-h-[300px] sm:max-h-[340px] w-auto object-contain"
+                    className="w-full h-full object-cover object-center"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-transparent"
                   />
                 </div>
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent"
-                />
-                <div className="relative z-10 px-5 sm:px-6 pb-5 pt-2 flex items-center justify-between gap-4 text-xs sm:text-sm text-slate-200 border-t border-slate-800/80 bg-slate-950/75">
+                <div className="relative z-10 px-5 sm:px-6 py-4 flex items-center justify-between gap-4 text-xs sm:text-sm text-slate-200 border-t border-slate-800/80 bg-slate-950/90">
                   <span className="font-medium">Command & Guarding Operations</span>
                   <span className="font-mono text-amber-300 tabular-nums">Active 24/7</span>
                 </div>
