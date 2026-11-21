@@ -1,4 +1,4 @@
-# Shree Balaji Security Services Pvt. Ltd.
+# Shree Balaji Security Services
 
 Full-stack corporate security agency website with a built-in Admin Panel (`/admin`), PostgreSQL persistence (with automatic local JSON fallback), and Railway-ready deployment.
 

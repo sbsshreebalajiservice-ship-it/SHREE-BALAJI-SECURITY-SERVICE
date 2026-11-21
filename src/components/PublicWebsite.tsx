@@ -230,7 +230,7 @@ export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
                       {siteData.companyName}
                     </div>
                     <p className="text-xs sm:text-sm font-medium text-slate-300 mt-1">
-                      {siteData.companyTag} · PSARA Compliant · {siteData.address}
+                      {siteData.companyTag} · {siteData.address}
                     </p>
                   </div>
                 </div>
