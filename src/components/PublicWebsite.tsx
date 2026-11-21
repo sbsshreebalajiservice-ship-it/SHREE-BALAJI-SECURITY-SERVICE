@@ -264,20 +264,26 @@ export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
 
                 <div className="pt-6 border-t border-slate-800/80 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-300">
                   <span className="text-slate-400">24/7 Control Room Dispatch:</span>
-                  <div className="inline-flex flex-wrap items-center gap-x-3 gap-y-1">
+                  <div className="inline-flex flex-wrap items-center gap-x-2 gap-y-1">
                     {siteData.phone
-                      .split(',')
+                      .split(/[,/]/)
                       .map((num) => num.trim())
                       .filter(Boolean)
                       .map((num, idx) => (
-                        <a
-                          key={idx}
-                          href={`tel:${num.replace(/[^\d+]/g, '')}`}
-                          className="inline-flex items-center gap-1.5 font-mono tabular-nums font-medium text-white hover:text-amber-400 transition-colors"
-                        >
-                          {idx === 0 && <Phone className="w-4 h-4 text-amber-400" />}
-                          <span>{num}</span>
-                        </a>
+                        <span key={idx} className="inline-flex items-center gap-2">
+                          {idx > 0 && (
+                            <span aria-hidden="true" className="text-slate-500">
+                              /
+                            </span>
+                          )}
+                          <a
+                            href={`tel:${num.replace(/[^\d+]/g, '')}`}
+                            className="inline-flex items-center gap-1.5 font-mono tabular-nums font-medium text-white hover:text-amber-400 transition-colors"
+                          >
+                            {idx === 0 && <Phone className="w-4 h-4 text-amber-400" />}
+                            <span>{num}</span>
+                          </a>
+                        </span>
                       ))}
                   </div>
                 </div>
@@ -423,20 +429,26 @@ export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
               </p>
 
               <div className="space-y-4 border-t border-slate-800 pt-6">
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-2">
                   {siteData.phone
-                    .split(',')
+                    .split(/[,/]/)
                     .map((num) => num.trim())
                     .filter(Boolean)
                     .map((num, idx) => (
-                      <a
-                        key={idx}
-                        href={`tel:${num.replace(/[^\d+]/g, '')}`}
-                        className="inline-flex items-center gap-2 text-base font-mono tabular-nums font-semibold text-amber-400 hover:text-amber-300 transition-colors"
-                      >
-                        {idx === 0 && <Phone className="w-4 h-4 shrink-0" />}
-                        <span>{num}</span>
-                      </a>
+                      <span key={idx} className="inline-flex items-center gap-2">
+                        {idx > 0 && (
+                          <span aria-hidden="true" className="text-slate-500">
+                            /
+                          </span>
+                        )}
+                        <a
+                          href={`tel:${num.replace(/[^\d+]/g, '')}`}
+                          className="inline-flex items-center gap-2 text-base font-mono tabular-nums font-semibold text-amber-400 hover:text-amber-300 transition-colors"
+                        >
+                          {idx === 0 && <Phone className="w-4 h-4 shrink-0" />}
+                          <span>{num}</span>
+                        </a>
+                      </span>
                     ))}
                 </div>
                 <a
