@@ -11,7 +11,7 @@ const FALLBACK_SITE_DATA: SiteData = {
     '24/7 Professional Security Guards, Corporate Protection, Event Security, and Advanced CCTV Surveillance Solutions across India.',
   phone: '+91 7566514338 / 8319802819',
   email: 'sbs.shreebalajiservice@gmail.com',
-  address: 'Madhya Pradesh, India',
+  address: 'Jabalpur, Madhya Pradesh, India',
   stat1Num: '5+',
   stat1Label: 'Years of Experience',
   stat2Num: '500+',
