@@ -6,6 +6,7 @@ export interface ServiceItem {
   title: string;
   desc: string;
   imageUrl: string;
+  secondaryImageUrl?: string;
 }
 
 export interface SiteData {

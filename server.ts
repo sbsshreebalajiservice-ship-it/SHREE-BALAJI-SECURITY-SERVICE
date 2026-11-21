@@ -12,6 +12,7 @@ interface ServiceItem {
   title: string;
   desc: string;
   imageUrl: string;
+  secondaryImageUrl?: string;
 }
 
 interface SiteData {
@@ -62,7 +63,8 @@ const DATA_FILE = path.join(ROOT_DIR, 'data.json');
 const ALLOWED_STATUSES: ReadonlyArray<InquiryStatus> = ['Pending', 'Contacted', 'Completed'];
 
 const DEFAULT_SERVICE_IMAGES: Record<string, string> = {
-  guarding: '/src/assets/images/service_manned_guarding_1795262487636.jpg',
+  guarding: '/src/assets/images/manned_guarding_1.png',
+  guardingSecondary: '/src/assets/images/manned_guarding_2.png',
   cctv: '/src/assets/images/service_cctv_surveillance_1795262486918.jpg',
   corporate: '/src/assets/images/hero_security_command_1795262486785.jpg',
   event: '/src/assets/images/service_corporate_event_1795262486631.jpg',
@@ -101,6 +103,7 @@ const defaultSiteData: SiteData = {
       title: 'Manned Guarding',
       desc: 'Disciplined, police-verified security guards for residential societies, offices, banks, and industrial plants.',
       imageUrl: DEFAULT_SERVICE_IMAGES.guarding,
+      secondaryImageUrl: DEFAULT_SERVICE_IMAGES.guardingSecondary,
     },
     {
       id: 2,
@@ -186,13 +189,20 @@ function sanitizeSiteData(input: unknown): SiteData {
   const rawServices = Array.isArray(src.services) ? src.services : defaultSiteData.services;
   const services: ServiceItem[] = rawServices
     .filter((item): item is Record<string, unknown> => Boolean(item && typeof item === 'object'))
-    .map((item, index) => ({
-      id: typeof item.id === 'number' && Number.isFinite(item.id) ? item.id : Date.now() + index,
-      category: cleanStr(item.category, 'Security Service', 60),
-      title: cleanStr(item.title, 'Security Service', 100),
-      desc: cleanStr(item.desc, 'Professional security deployment.', 400),
-      imageUrl: sanitizeImageUrl(item.imageUrl, DEFAULT_SERVICE_IMAGES.guarding),
-    }))
+    .map((item, index) => {
+      const secondary =
+        typeof item.secondaryImageUrl === 'string' && item.secondaryImageUrl.trim()
+          ? sanitizeImageUrl(item.secondaryImageUrl, '')
+          : '';
+      return {
+        id: typeof item.id === 'number' && Number.isFinite(item.id) ? item.id : Date.now() + index,
+        category: cleanStr(item.category, 'Security Service', 60),
+        title: cleanStr(item.title, 'Security Service', 100),
+        desc: cleanStr(item.desc, 'Professional security deployment.', 400),
+        imageUrl: sanitizeImageUrl(item.imageUrl, DEFAULT_SERVICE_IMAGES.guarding),
+        ...(secondary ? { secondaryImageUrl: secondary } : {}),
+      };
+    })
     .slice(0, 20);
 
   return {
