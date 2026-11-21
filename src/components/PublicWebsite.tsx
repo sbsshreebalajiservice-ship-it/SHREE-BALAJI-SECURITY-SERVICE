@@ -262,15 +262,24 @@ export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
                   </button>
                 </div>
 
-                <div className="pt-6 border-t border-slate-800/80 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-300">
+                <div className="pt-6 border-t border-slate-800/80 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-300">
                   <span className="text-slate-400">24/7 Control Room Dispatch:</span>
-                  <a
-                    href={`tel:${siteData.phone.replace(/\s+/g, '')}`}
-                    className="inline-flex items-center gap-2 font-mono tabular-nums font-medium text-white hover:text-amber-400 transition-colors"
-                  >
-                    <Phone className="w-4 h-4 text-amber-400" />
-                    <span>{siteData.phone}</span>
-                  </a>
+                  <div className="inline-flex flex-wrap items-center gap-x-3 gap-y-1">
+                    {siteData.phone
+                      .split(',')
+                      .map((num) => num.trim())
+                      .filter(Boolean)
+                      .map((num, idx) => (
+                        <a
+                          key={idx}
+                          href={`tel:${num.replace(/[^\d+]/g, '')}`}
+                          className="inline-flex items-center gap-1.5 font-mono tabular-nums font-medium text-white hover:text-amber-400 transition-colors"
+                        >
+                          {idx === 0 && <Phone className="w-4 h-4 text-amber-400" />}
+                          <span>{num}</span>
+                        </a>
+                      ))}
+                  </div>
                 </div>
               </div>
 
@@ -414,13 +423,22 @@ export function PublicWebsite({ siteData, onNavigate }: PublicWebsiteProps) {
               </p>
 
               <div className="space-y-4 border-t border-slate-800 pt-6">
-                <a
-                  href={`tel:${siteData.phone.replace(/\s+/g, '')}`}
-                  className="flex items-center gap-3 text-base font-mono tabular-nums font-semibold text-amber-400 hover:text-amber-300 transition-colors"
-                >
-                  <Phone className="w-4 h-4 shrink-0" />
-                  <span>{siteData.phone}</span>
-                </a>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                  {siteData.phone
+                    .split(',')
+                    .map((num) => num.trim())
+                    .filter(Boolean)
+                    .map((num, idx) => (
+                      <a
+                        key={idx}
+                        href={`tel:${num.replace(/[^\d+]/g, '')}`}
+                        className="inline-flex items-center gap-2 text-base font-mono tabular-nums font-semibold text-amber-400 hover:text-amber-300 transition-colors"
+                      >
+                        {idx === 0 && <Phone className="w-4 h-4 shrink-0" />}
+                        <span>{num}</span>
+                      </a>
+                    ))}
+                </div>
                 <a
                   href={`mailto:${siteData.email}`}
                   className="flex items-center gap-3 text-sm text-slate-300 hover:text-white transition-colors"

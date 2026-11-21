@@ -74,7 +74,7 @@ const defaultSiteData: SiteData = {
   heroTitle: 'Your Safety Is Our Top Priority',
   heroSubtitle:
     '24/7 Professional Security Guards, Corporate Protection, Event Security, and Advanced CCTV Surveillance Solutions across India.',
-  phone: '7566514338',
+  phone: '+91 7566514338, 8319802819',
   email: 'sbs.shreebalajiservice@gmail.com',
   address: 'Madhya Pradesh, India',
   stat1Num: '10+',
@@ -200,7 +200,7 @@ function sanitizeSiteData(input: unknown): SiteData {
     companyTag: cleanStr(src.companyTag, defaultSiteData.companyTag, 120),
     heroTitle: cleanStr(src.heroTitle, defaultSiteData.heroTitle, 160),
     heroSubtitle: cleanStr(src.heroSubtitle, defaultSiteData.heroSubtitle, 400),
-    phone: cleanStr(src.phone, defaultSiteData.phone, 40),
+    phone: cleanStr(src.phone, defaultSiteData.phone, 80),
     email: cleanStr(src.email, defaultSiteData.email, 120),
     address: cleanStr(src.address, defaultSiteData.address, 180),
     stat1Num: cleanStr(src.stat1Num, defaultSiteData.stat1Num, 20),
